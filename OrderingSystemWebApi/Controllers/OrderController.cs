@@ -11,6 +11,7 @@ namespace OrderingSystemWebApi.Controllers
 {
     public class OrderController : ApiController
     {
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger("UserController");
         private IOrderRepository<Order> _orderRepository;
         private ISearchOrder _searchOrder;
 
@@ -29,7 +30,7 @@ namespace OrderingSystemWebApi.Controllers
             }
             catch (Exception e)
             {
-               // _log.Error(e.ToString());
+                _log.Error(e.ToString());
                 return InternalServerError();
             }
         }
@@ -40,6 +41,8 @@ namespace OrderingSystemWebApi.Controllers
                 //var ReturnofOrderRepository = _orderRepository.Add(order);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, _searchOrder.GetOrder(id)));            
         }
+
+
         [HttpPost]
         public IHttpActionResult Add(Order order)
         {
